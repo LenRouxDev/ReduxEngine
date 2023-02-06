@@ -30,8 +30,10 @@ class PauseSubState extends MusicBeatSubstate
 	var skipTimeTracker:Alphabet;
 	var curTime:Float = Math.max(0, Conductor.songPosition);
 	//var botplayText:FlxText;
+	//var author:String;
 
 	public static var songName:String = '';
+
 
 	public function new(x:Float, y:Float)
 	{
@@ -104,7 +106,7 @@ class PauseSubState extends MusicBeatSubstate
 		practiceText.x = FlxG.width - (practiceText.width + 20);
 		practiceText.updateHitbox();
 		practiceText.visible = PlayState.instance.practiceMode;
-		add(practiceText);
+		//add(practiceText);
 
 		var chartingText:FlxText = new FlxText(20, 15 + 101, 0, "CHARTING MODE", 32);
 		chartingText.scrollFactor.set();
@@ -115,6 +117,32 @@ class PauseSubState extends MusicBeatSubstate
 		chartingText.visible = PlayState.chartingMode;
 		add(chartingText);
 
+		var madeText:FlxText = new FlxText(20, 15 + 101, 0, "", 32);
+		madeText.scrollFactor.set();
+		madeText.setFormat(Paths.font('vcr.ttf'), 32);
+		madeText.x = FlxG.width - (madeText.width + 20);
+		madeText.y = FlxG.height - (madeText.height + 20);
+		madeText.updateHitbox();
+		madeText.visible = true;
+		add(madeText);
+
+		switch (PlayState.SONG.song.toLowerCase())
+		{
+		case 'sus':
+			madeText.text = "you deserve therapy";  // sercet
+			
+		case "tutorial" | "bopeebo" | "fresh" | "dadbattle" | "spookeez" | "pico" | "philly" | "blammed" | "satin-panties" | "high" | "milf" | "cocoa" | "eggnog" | "senpai" | "roses" | "thorns" | "ugh" | "guns" | "stress":
+			madeText.text = "By KawaiSprite";
+		case "test":
+			madeText.text = "Vocals By MtH (SilvaGunner), I forgot who made the Inst";
+		case "monster" | "winter-horrorland":
+			madeText.text = "i forgor :skull:";
+		default:
+			madeText.text = "By CoolSwag";
+		}
+		madeText.x = FlxG.width - (madeText.width + 20);
+		
+
 		blueballedTxt.alpha = 0;
 		levelDifficulty.alpha = 0;
 		levelInfo.alpha = 0;
@@ -122,6 +150,7 @@ class PauseSubState extends MusicBeatSubstate
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
 		blueballedTxt.x = FlxG.width - (blueballedTxt.width + 20);
+		madeText.screenCenter(Y);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
