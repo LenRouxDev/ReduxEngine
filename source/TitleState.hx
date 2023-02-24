@@ -197,7 +197,12 @@ class TitleState extends MusicBeatState
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
-		FlxG.mouse.visible = false;
+		FlxG.mouse.visible = true;
+		var mouse = new FlxSprite().loadGraphic(Paths.image("newcursor"));
+		mouse.scale.x = 0.5;
+		mouse.scale.y = 0.5;
+		FlxG.mouse.load(mouse.pixels);
+
 		#if FREEPLAY
 		MusicBeatState.switchState(new FreeplayState());
 		#elseif CHARTING
@@ -515,7 +520,7 @@ class TitleState extends MusicBeatState
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
 			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
+			else if (FlxG.keys.firstJustPressed() != FlxKey.SEVEN)
 			{
 				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
 				var keyName:String = Std.string(keyPressed);

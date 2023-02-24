@@ -1,5 +1,6 @@
 package;
 
+import editors.ChartingState;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -16,10 +17,12 @@ import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+using flixel.util.FlxSpriteUtil;
 import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+
 
 using StringTools;
 
@@ -49,6 +52,7 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
 		#end
@@ -109,16 +113,17 @@ class MainMenuState extends MusicBeatState
 
 		for (i in 0...optionShit.length)
 		{
+			trace('optionShit.length = '+i);
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
-			menuItem.scale.x = scale;
-			menuItem.scale.y = scale;
+			var menuItem:FlxSprite = new FlxSprite(0, (i * (140/1.5))  + offset);
+			menuItem.scale.x = scale/1.5;
+			menuItem.scale.y = scale/1.5;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
-			menuItem.x = 100 + (i * 10);
+			menuItem.x = menuItem.y/2;
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if(optionShit.length < 6) scr = 0;
@@ -168,6 +173,7 @@ class MainMenuState extends MusicBeatState
 	#if ACHIEVEMENTS_ALLOWED
 	// Unlocks "Freaky on a Friday Night" achievement
 	function giveAchievement() {
+		trace('giveAchievement()');
 		add(new AchievementObject('friday_night_play', camAchievement));
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 		trace('Giving achievement "friday_night_play"');
@@ -238,7 +244,9 @@ class MainMenuState extends MusicBeatState
 							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
 							{
 								var daChoice:String = optionShit[curSelected];
-
+								
+								trace(daChoice);
+								
 								switch (daChoice)
 								{
 									case 'story_mode':
@@ -255,6 +263,8 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
 										LoadingState.loadAndSwitchState(new options.OptionsState());
+									case 'static_test':
+										MusicBeatState.switchState(new ChartingState());
 								}
 							});
 						}
@@ -280,6 +290,7 @@ class MainMenuState extends MusicBeatState
 
 	function changeItem(huh:Int = 0)
 	{
+		trace('changed Item');
 		curSelected += huh;
 
 		if (curSelected >= menuItems.length)

@@ -103,7 +103,7 @@ class StoryMenuState extends MusicBeatState
 				loadedWeeks.push(weekFile);
 				WeekData.setDirectoryFromWeek(weekFile);
 				var weekThing:MenuItem = new MenuItem(0, bgSprite.y + 396, WeekData.weeksList[i]);
-				weekThing.y += ((weekThing.height + 20) * num);
+				weekThing.y += ((weekThing.height/2) * num);
 				weekThing.targetY = num;
 				grpWeekText.add(weekThing);
 
@@ -176,7 +176,7 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = rankText.font;
-		txtTracklist.color = 0xFFe55777;
+		txtTracklist.color = 0xffff8800;
 		add(txtTracklist);
 		// add(rankText);
 		add(scoreText);
